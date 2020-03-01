@@ -1,37 +1,71 @@
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/zhouyong1234/zhouyong1234.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/zhouyong1234/zhouyong1234.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+<h1>Python学习总结(互斥锁、进程、线程、深拷贝与浅拷贝)</h1>
+<h2>GIL</h2>
+<p><b>每个线程在执行的过程都需要先获取GIL，保证同一时刻只有一个线程运行</b></p>
+<h2>闭包三要素</h2>
+<p><b>1.要有函数的嵌套定义</b></p>
+<p><b>2.内部函数使用到了外部函数的参量或参数</b></p>
+<p><b>3.外部函数要返回内部函数的引用</b></p>
+<h2>互斥锁</h2>
+<p><b>当多个线程几乎同时修改某一个共享数据的时候，需要进行同步控制</b></p>
+<p><b>某个线程需要更改数据时，先将其锁定，此时资源的状态为锁定，其他线程不能更改，直到该线程释放资源，将资源的状态改为非锁定，其他的线程才能再次锁定该资源，互斥锁保证了每次只有一个线程进行写入操作，从而保证了多线程下数据的正确性。</b></p>
+<h2>进程</h2>
+<p><b>一个程序运行起来后，代码+用到的资源称之为进程，它是操作系统分配资源的基本单元。</b></p>
+<h2>进程和线程区别</h2>
+<h3>定义的不同</h3>
+<p><b>进程是系统进行资源分配和调度的一个独立单位
+线程是进程的一个实体，是CPU调度和分配的基本单位，它是比进程更小的能独立运行的基本单位，线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源，但是它可与同属一个进程的其他的线程共享进程拥有的全部资源。</b></p>
+<h3>区别</h3>
+<p><b>一个程序至少有一个进程，一个程序至少有一个线程。线程的划分尺度小于进程（资源比进程少），使得多线程程序的并发性高。进程在执行过程中拥有独立的内存单元，而多个线程共享内存，从而极大提高了程序的运行效率。线程不能独立运行，必须依赖在进程中。</b></p>
+<h3>优缺点</h3>
+<p><b>线程执行开销小，但不利于资源的管理和保护，进程相反。</b></p>
+<h2>静态方法</h2>
+<p><b>当在类中既不需要实例对象的引用也不需要类对象的引用，而且要保证类的封装性，可以考虑使用静态方法</b></p>
+<h2>静态资源和动态资源</h2>
+<p><b>静态资源：不需要经常变化 web服务器保存，动态资源：需要根据情况/条件变化的数据。</b></p>
+<h2>模板</h2>
+<p><b>不含有内容的页面，需要从数据库中查询对应资源进行填充，html文件可以做为静态资源，当不需要改变html页面内容时，此时html页面可以做为静态资源
+需要从当html页面内容是一个模板，需要从数据库中查询数据填充当前这个html页面模板，此时html页面就是动态资源</b></p>
+<h2>浏览器访问网址的过程</h2>
+<p><b>浏览器本身是一个客户端，当输入网址的时候，首先浏览器会去请求DNS服务器，通过DNS服务器获取相应的域名对应的IP</b></p>
+<p><b>通过IP地址找到对应的服务器后，要求建立TCP连接</b></p>
+<p><b>浏览器发送完HTTP Request（请求）包后，服务器收到请求包后才开始处理请求包</b></p>
+<p><b>在服务器收到请求之后，服务器调用自身服务，返回HTTP Response（响应）包</b></p>
+<p><b>客户端收到来自服务器的响应后开始渲染Response包里的主体（body），等收到全部的内容随后断开与该服务器之间的TCP连接</b></p>
+<h2>深拷贝和浅拷贝</h2>
+<h3>copy.copy() - 浅拷贝</h3>
+<p><b>对可变类型对象进行浅拷贝，只做顶层拷贝</b></p>
+<p><b>对不可变类型对象进行浅拷贝，那么不拷贝，直接引用指向</b></p>
+<h3>copy.deepcopy() - 深拷贝</h3>
+<p><b>对可变类型对象进行深拷贝，除了顶层拷贝，还会对该对象的子元素进行拷贝</b></p>
+<p><b>对不可变类型对象进行深拷贝</b></p>
+<p><b>如果该对象存在可变类型数据的子元素，那么会顶层拷贝，并且对其子元素进行深拷贝</b></p>
+<p><b>如果该对象不存在可变类型数据的子元素，那么不拷贝，直接指向引用</b></p>
+<h2>死锁</h2>
+<p><b>在线程间共享多个资源的时候，如果两个线程分别占有一部分资源并且同时等待对方的资源，就会造成死锁，一旦发生就会造成应用的停止响应。</b></p>
+<h2>线程</h2>
+<p><b>一个程序运行起来之后，一定有一个执行代码的东西，这个东西就称之为线程，如果创建Thread时执行的函数，运行结束就意味着子线程结束了，当调用Thread的时候，不会创建线程，当调用Thread创建出来的实例对象的start方法地时候才会创建线程以及让这个线程开始运行，线程是程序执行的最小执行单位，由CPU进行调度执行，线程在执行时是无序的，不能对线程的执行顺序进行控制</b></p>
+<h2>正则表达式</h2>
+<h3>单字符匹配</h3>
+<p><b>
+. 匹配任意一个字符（除了\n）<br>
+[] 匹配[]中列举的字符<br>
+\d 匹配数字。即0-9<br>
+\D 匹配非数字<br>
+\s 匹配空格，即空格，tab键<br>
+\S 匹配非空格<br>
+\w 匹配单词字符，即a-z、A-Z、0-9、_<br>
+\W 匹配非单词字符
+</b></p>
+<h3>多字符匹配</h3>
+<p><b>
+* 匹配前一个字符出现0次或者无限次，即可有可无<br/>
++ 匹配前一个字符出现1次或者无限次，即至少一次<br/>
+？匹配前一个字符出现1次或者0次，即要么有1次，要么没有<br/>
+{m} 匹配前一个字符出现m次<br/>
+{m，n}匹配前一个字符出现m到n次<br/>
+</b></p>
+<h2>装饰器</h2>
+<p><b>装饰器的作用：在不修改原来函数源代码的前提下，对函数功能进行拓展，要么在函数调用之前添加功能，要么就在函数调用之后添加功能，装饰器在函数没有调用之前就已经对函数进行装饰。注意：装饰器下边紧接着函数才会进行装饰，装饰顺序：从下向上装饰，函数调用顺序：与装饰的顺序相反，从上向下调用。带有参数装饰器的作用：在不修改函数的前提下，使用同一个装饰器对不同的函数添加不同的功能。对象之间的赋值，其实就是引用的传递，函数名其实就是一个变量，指向函数代码空间的对象。</b></p>
+<h2>组包和解包</h2>
+<p><b>定义函数时，*args，**kwargs作为函数形参，功能是组包</b></p>
+<p><b>调用函数时，*args, **kwargs作为函数实参，功能是拆包</b></p>
